@@ -62,7 +62,7 @@ const getMessages = async (req, res) => {
 
     return res.json(messages);
   } catch (err) {
-    console.log(err);
+   
     return res.status(400).json({ error: err.message });
   }
 };
@@ -91,7 +91,7 @@ const getConversations = async (req, res) => {
 
     return res.json(conversations);
   } catch (err) {
-    console.log(err);
+   
     return res.status(400).json({ error: err.message });
   }
 };

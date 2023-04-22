@@ -35,18 +35,25 @@ const PostEditor = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.title[-1] != '?') {
-            formData.title = formData.title +'?'
-        }
-        setLoading(true);
-        const data = await createQuestion(formData, isLoggedIn());
-        setLoading(false);
-        if (data && data.error) {
-            setServerError(data.error);
+        if (isLoggedIn()) {
+            if (formData.title[-1] != '?') {
+                formData.title = formData.title + '?'
+            }
+            setLoading(true);
+            const data = await createQuestion(formData, isLoggedIn());
+            setLoading(false);
+            if (data && data.error) {
+                setServerError(data.error);
+            }
+            else {
+                navigate("/users/" + user.username);
+            }
+
         }
         else {
-            navigate("/users/" + user.username);
+            navigate("/signup/");
         }
+       
     };
 
     const validate = () => {

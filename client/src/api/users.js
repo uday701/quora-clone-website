@@ -55,7 +55,6 @@ const getRandomUsers = async (query) => {
 
 const updateUser = async (user, data) => {
   try {
-      console.log(BASE_URL + "api/users/" + user.userId)
     const res = await fetch(BASE_URL + "api/users/" + user.userId, {
       method: "PATCH",
       headers: {

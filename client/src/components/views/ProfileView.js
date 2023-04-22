@@ -1,4 +1,4 @@
-import { Card, Container, Stack, Tab, Tabs } from "@mui/material";
+import { Container, Stack} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
@@ -16,7 +16,7 @@ import Profile from "../Profile";
 import ProfileTabs from "../ProfileTabs";
 
 const ProfileView = () => {
-  const [loading, setLoading] = useState(true);
+  
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
   const [tab, setTab] = useState("posts");
@@ -27,9 +27,9 @@ const ProfileView = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    setLoading(true);
+   
     const data = await getUser(params);
-    setLoading(false);
+    
     if (data.error) {
       setError(data.error);
     } else {
@@ -77,6 +77,7 @@ const ProfileView = () => {
       console.log(base64);
       console.log(typeof base64)
      await updateUser(user, { selectedFile: base64 });
+     navigate("/")
     }
 
   useEffect(() => {

@@ -1,7 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\api",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\views",
+    "\\server",
+    "\\server\\controllers"
   ],
-  "SelectedNode": "\\client",
+  "SelectedNode": "\\server\\.env",
   "PreviewInSolutionExplorer": false
 }

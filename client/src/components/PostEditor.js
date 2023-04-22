@@ -37,14 +37,20 @@ const PostEditor = () => {
     e.preventDefault();
     console.log("working")
     setLoading(true);
-    const data = await createPost(formData, isLoggedIn());
-    setLoading(false);
-    console.log(isLoggedIn())
-    if (data && data.error) {
-      setServerError(data.error);
-    } else {
-      navigate("/users/" + isLoggedIn().username);
-    }
+      if (isLoggedIn()) {
+
+          const data = await createPost(formData, isLoggedIn());
+          setLoading(false);
+          console.log(isLoggedIn())
+          if (data && data.error) {
+              setServerError(data.error);
+          } else {
+              navigate("/users/" + isLoggedIn().username);
+          }
+      }
+      else {
+          navigate("/signup");
+      }
   };
 
   const validate = () => {

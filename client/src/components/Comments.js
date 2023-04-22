@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import Loading from "./Loading";
 import { getComments } from "../api/posts";
-import { useParams } from "react-router-dom";
+
 import CommentEditor from "./CommentEditor";
 
 const Comments = (props) => {
@@ -13,8 +13,7 @@ const Comments = (props) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const params = props.params;
-  console.log(params)
-
+  
   const fetchComments = async () => {
     const data = await getComments(params);
     if (data.error) {
@@ -32,7 +31,6 @@ const Comments = (props) => {
     let commentToFind;
 
     const recurse = (comment, id) => {
-      console.log(comment);
       if (comment._id === id) {
         commentToFind = comment;
       } else {
@@ -85,7 +83,6 @@ const Comments = (props) => {
 
   const addComment = (comment) => {
     if (comment.parent) {
-      console.log(comment.parent);
       const parentComment = findComment(comment.parent);
       parentComment.children = [comment, ...parentComment.children];
 

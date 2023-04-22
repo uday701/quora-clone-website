@@ -1,7 +1,6 @@
-import { Button, Stack,TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
 import PostEditor from "./PostEditor";
 import QuestionEditor from "./QuestionEditor";
 
@@ -12,18 +11,11 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 
 const CreatePost = () => {
-    const navigate = useNavigate();
-
-
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));

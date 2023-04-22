@@ -26,9 +26,9 @@ const buildToken = (user) => {
 const register = async (req, res) => {
   try {
     const {firstname,lastname, username, email, password } = req.body;
-
+    
     if (!(firstname && lastname && username && email && password)) {
-      throw new Error("All input required");
+      throw new Error("All inputsss required");
     }
 
     const normalizedEmail = email.toLowerCase();

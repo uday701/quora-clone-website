@@ -1,6 +1,7 @@
 import { initiateSocketConnection } from "./socketHelper";
 
 const isLoggedIn = () => {
+ 
   return JSON.parse(localStorage.getItem("user"));
 };
 

@@ -1,5 +1,4 @@
 import { BASE_URL } from "../config";
-const axios = require('axios');
 
 
 const getUserLikedPosts = async (likerId, token, query) => {

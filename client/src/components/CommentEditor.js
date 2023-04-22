@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
@@ -35,8 +35,7 @@ const CommentEditor = ({ label, comment, addComment, setReplying, params }) => {
     };
 
     setLoading(true);
-    console.log(body)
-    console.log(params)
+    
     const data = await createComment(body, params, isLoggedIn());
     setLoading(false);
 
@@ -60,9 +59,7 @@ const CommentEditor = ({ label, comment, addComment, setReplying, params }) => {
           <Typography variant="h5">
             {comment ? <>Reply</> : <>Comment</>}
           </Typography>
-          <Link to="https://commonmark.org/help/" target="_blank">
-            Markdown Help
-          </Link>
+          
         </Stack>
 
               <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex" }}>

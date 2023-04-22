@@ -19,7 +19,7 @@ const createQuestion = async (post, user) => {
 };
 
 const getQuestions = async (token, query) => {
-    console.log("reached");
+   
     try {
         const res = await fetch(
             BASE_URL + "api/questions?" + new URLSearchParams(query),

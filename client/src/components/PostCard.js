@@ -1,15 +1,11 @@
 import {
-  Button,
   Card,
-  IconButton,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { AiFillCheckCircle, AiFillEdit, AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import ReadMoreReact from 'read-more-react';
@@ -34,7 +30,7 @@ const PostCard = (props) => {
   const isAuthor = user && user.username === postData.poster.username;
 
   const theme = useTheme();
-  const iconColor = theme.palette.primary.main;
+ 
 
   const [editing, setEditing] = useState(false);
  
@@ -109,7 +105,7 @@ const PostCard = (props) => {
               variant="h5"
               gutterBottom
                             sx={{ overflow: "hidden", mt: 1, maxHeight: 125, "&:hover": { textDecoration: post.question ? "underline" : "none", cursor: post.question ? "pointer":"default"}}}
-              onClick={post.question ?() => navigate("/questions/" + post.question):undefined}
+              onClick={(post.question) ?() => navigate("/questions/" + post.question):undefined}
               className="title"
             >
               {post.title}

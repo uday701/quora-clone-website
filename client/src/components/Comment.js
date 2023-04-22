@@ -1,5 +1,5 @@
-import { Button, IconButton, Typography, useTheme,Stack } from "@mui/material";
-import { Box, compose } from "@mui/system";
+import {  IconButton, Typography, useTheme,Stack } from "@mui/material";
+import { Box} from "@mui/system";
 import React, { useState } from "react";
 import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,8 +10,8 @@ import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 import Markdown from "./Markdown";
 import { MdCancel } from "react-icons/md";
-import { BiReply, BiTrash } from "react-icons/bi";
-import { BsReply, BsReplyFill } from "react-icons/bs";
+import {  BiTrash } from "react-icons/bi";
+import { BsReplyFill } from "react-icons/bs";
 import Moment from "react-moment";
 
 const Comment = (props) => {
@@ -28,8 +28,7 @@ const Comment = (props) => {
   const navigate = useNavigate();
     const params = {}
      params.id=props.comment.post
-  console.log(props.comment)
-  console.log(params)
+ 
 
   const handleSetReplying = () => {
     if (isLoggedIn()) {

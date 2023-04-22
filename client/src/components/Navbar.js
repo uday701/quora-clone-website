@@ -126,14 +126,14 @@ const Navbar = () => {
                 <AiFillMessage />
               </IconButton>
               <IconButton component={Link}  to={"/users/" + username}>
-               <Avatar
-              sx={{
-                  height: 30,
-                  width: 30,
-                  backgroundColor: "lightgrey",
-              }}
-              src={user.selectedFile ? user.selectedFile : "https://avatars.dicebear.com/api/croodles/" + user.username + ".svg"}
-          />
+                              <Avatar
+                                  sx={{
+                                      height: 30,
+                                      width: 30,
+                                      backgroundColor: "lightgrey",
+                                  }}
+                                  src={user.selectedFile ? user.selectedFile : "https://avatars.dicebear.com/api/croodles/" + user.username + ".svg"}
+                              />
               </IconButton>
               <Button onClick={handleLogout}>Logout</Button>
             </>

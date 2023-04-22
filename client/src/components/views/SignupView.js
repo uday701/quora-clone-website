@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
+import { Avatar, Button, Paper, Grid, Typography, Container,TextField,Box} from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { loginUser } from "../../helpers/authHelper";
 import { isLength, isEmail, contains } from "validator";
-import FileBase from 'react-file-base64';
-
+import ErrorAlert from "../ErrorAlert"
 import { login, signup } from '../../api/users.js';
 
 import useStyles from './SignupCss.js';
 import Input from '../Input.js';
-import Icon from "../Icon.js"
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+const initialState = { firstname: '', lastname: '',username:'', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
     const [form, setForm] = useState(initialState);
@@ -34,8 +31,8 @@ const SignUp = () => {
     const validate = () => {
         const errors = {};
 
-        if (!isLength(form.username, { min: 6, max: 30 })) {
-            errors.username = "Must be between 6 and 30 characters long";
+        if (!isLength(form.username, { min: 8, max: 30 })) {
+            errors.username = "Must be between 8 and 30 characters long";
         }
 
         if (contains(form.username, " ")) {
@@ -49,6 +46,9 @@ const SignUp = () => {
         if (!isEmail(form.email)) {
             errors.email = "Must be a valid email address";
         }
+        if (form.password !== form.confirmPassword) {
+           errors.confirmPassword="Password and Confirm Password not matching"
+        }
 
         setErrors(errors);
 
@@ -57,28 +57,28 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+       
+       
         if (isSignup) {
-            const errors = validate();
-            if (Object.keys(errors).length !== 0) return;
+            const errorr = validate();
+           
+            if (Object.keys(errorr).length !== 0) return;
             const data = await signup(form);
-            
-
 
             if (data.error) {
                 setServerError(data.error);
             } else {
-             console.log(data)
+            
                 loginUser(data);
                 switchMode();
-                //loginUser(data);
-                //navigate("/");
+               
+                navigate("/");
             }
             
         
         } else {
             const data = await login(form);
-            console.log(data)
+            
             if (data.error) {
                 setServerError(data.error);
             } else {
@@ -89,20 +89,7 @@ const SignUp = () => {
         }
     };
 
-    const googleSuccess = async (res) => {
-        const result = res?.profileObj;
-        const token = res?.tokenId;
-
-        try {
-            //dispatch({ type: AUTH, data: { result, token } });
-
-            navigate.push('/');
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const googleError = () => alert('Google Sign In was unsuccessful. Try again later');
+  
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -113,41 +100,36 @@ const SignUp = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">{isSignup ? 'Sign up' : 'Sign in'}</Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
+                <Box component="form" className={classes.form} onSubmit={handleSubmit} spacing={2}>
+                    <Grid container spacing={2} sx={{ m: 2 }}>
                         {isSignup && (
                             <>
-                                <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-                                <Input name="lastName" label="Last Name" handleChange={handleChange} half />
-                                <Input name="username" label="Username" handleChange={handleChange} />
+                                <Input  variant="outlined" name="firstname" label="First Name" handleChange={handleChange} autoFocus half/>
+                                <Input variant="outlined" name="lastname" label="Last Name" handleChange={handleChange} half/>
+                                <TextField variant="outlined" fullWidth name="username" label="Username" onChange={handleChange} error={errors.username !== undefined}
+                                    helperText={errors.username} />
                             </>
                         )}
-                        <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
-                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
-                        {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
+                        <TextField margin="normal" sx={{ mb: 6 }} variant="outlined" fullWidth name="email" label="Email Address" onChange={handleChange} type="email" error={errors.email !== undefined}
+                            helperText={errors.email}/>
+                                                
+                        <TextField margin="normal"  sx={{ mb: 6 }} variant="outlined" name="password" label="Password" fullWidth onChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} error={errors.password !== undefined}
+                            helperText={errors.password } />
+                        {isSignup && <TextField margin="normal" sx={{ mb: 6 }} variant="outlined" fullWidth name="confirmPassword" label="Repeat Password" onChange={handleChange} type="password" error={errors.confirmPassword !== undefined} helperText={errors.confirmPassword}/>}
                     </Grid>
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    <GoogleLogin
-                        clientId="564033717568-e5p23rhvcs4i6kffgsbci1d64r8hp6fn.apps.googleusercontent.com"
-                        render={(renderProps) => (
-                            <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
-                                Google Sign In
-                            </Button>
-                        )}
-                        onSuccess={googleSuccess}
-                        onFailure={googleError}
-                        cookiePolicy="single_host_origin"
-                    />
+                  
                     <Grid container justify="flex-end">
                         <Grid item>
+                            <ErrorAlert error={serverError} />
                             <Button onClick={switchMode}>
                                 {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up"}
                             </Button>
                         </Grid>
                     </Grid>
-                </form>
+                </Box>
             </Paper>
         </Container>
     );
